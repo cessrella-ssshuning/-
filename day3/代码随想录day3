@@ -1,0 +1,144 @@
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = head;
+        ListNode prev = dummy;
+        while(cur!=null){
+            if(cur.val==val){
+                prev.next = cur.next;
+                cur = cur.next;
+            }else{
+                prev = cur;
+                cur = cur.next;
+            }           
+        }
+        return dummy.next;
+    }
+}
+class MyLinkedList {
+    class ListNode{
+        ListNode next;
+        ListNode prev;
+        int val;
+        public ListNode(int val){
+            next = null;
+            prev = null;
+            this.val = val;
+        }
+    }
+    ListNode head;
+    ListNode tail;
+    int len;
+    public MyLinkedList() {
+        head = new ListNode(0);
+        tail = new ListNode(0);
+        head.next = tail;
+        tail.prev = head;
+        len = 0;
+    }
+    
+    public int get(int index) {
+        if(index>len-1) return -1;
+        ListNode cur = head;
+        int curIdx = -1;
+        while(curIdx!=index){
+            cur = cur.next;
+            curIdx++;
+        } 
+     //   print();
+        return cur.val;
+    }
+    
+    public void addAtHead(int val) {
+        ListNode node = new ListNode(val);
+        ListNode next = head.next;
+        head.next = node;
+        node.prev = head;
+        next.prev = node;
+        node.next = next;
+        len++;
+     //   print();
+    }
+    
+    public void addAtTail(int val) {
+        ListNode node = new ListNode(val);
+        ListNode prev = tail.prev;
+        prev.next = node;
+        node.prev = prev;
+        node.next = tail;
+        tail.prev = node;
+        len++;
+     //   print();
+    }
+    
+    public void addAtIndex(int index, int val) {
+        if(index<0||index>len) return;
+        if(len==index){
+            addAtTail(val);
+            return;
+        }
+        ListNode node = new ListNode(val);
+        ListNode cur = head;
+        int curIdx = -1;
+        while(curIdx!=index){
+            cur = cur.next;
+            curIdx++;
+        } 
+        ListNode prev = cur.prev;
+        prev.next = node;
+        node.prev = prev;
+        node.next = cur;
+        cur.prev = node;
+        len++;
+      //  print();
+    }
+    
+    public void deleteAtIndex(int index) {
+        if(index<0||index>len-1) return;
+        ListNode cur = head;
+        int curIdx = -1;
+        while(curIdx!=index){
+            cur = cur.next;
+            curIdx++;
+        } 
+        ListNode next = cur.next;
+        ListNode prev = cur.prev;
+        prev.next = next;
+        next.prev = prev;
+        len--;
+      //  print();
+    }
+    private void print(){
+        ListNode cur = head.next;
+        while(cur!=tail){
+            System.out.print(cur.val+"->");
+            cur = cur.next;
+        }
+        System.out.println();
+    }
+}
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = head;
+        while(cur!=null&&cur.next!=null){
+            ListNode next = cur.next;
+            cur.next = next.next;
+            next.next = dummy.next;
+            dummy.next = next;
+        }
+        return dummy.next;
+    }
+}
+public ListNode reverseList(ListNode head) {
+        return dfs(null,head);
+    }
+    private ListNode dfs(ListNode prev, ListNode cur){
+        if(cur==null) return prev;
+        ListNode next = cur.next;
+        cur.next = prev;
+        return dfs(cur,next);
+    }
+}
