@@ -1,0 +1,74 @@
+class Solution {
+    public void reverseString(char[] s) {
+        int st = 0, end = s.length-1;
+        while(st<end){
+            char tmp = s[st];
+            s[st] ^= s[end];
+            s[end] ^= s[st];
+            s[st] ^= s[end];
+            st++;
+            end--;
+        }
+    }
+}
+class Solution {
+    public String reverseWords(String s) {
+        return reverseWord(trimString(s));
+    }
+    private String trimString(String s){
+        int left = 0;
+        int right = s.length()-1;
+        StringBuilder sb = new StringBuilder();
+        while(s.charAt(left)==' '){
+            left++;
+        }
+        while(s.charAt(right)==' '){
+            right--;
+        }
+        while(left<=right){
+            int tmpLeft = left;
+            while(left<=right&&s.charAt(left)!=' '){
+                left++;
+            }
+            String word = reverseWord(s.substring(tmpLeft,left));
+            sb.append(word);
+            sb.append(" ");
+            while(left<=right&&s.charAt(left)==' '){
+                left++;
+            }
+        }
+        return sb.substring(0,sb.length()-1);
+    }
+    private String reverseWord(String s){
+        char[] sArr = s.toCharArray();
+        int st = 0,end = sArr.length-1;
+        while(st<end){
+            sArr[st] ^= sArr[end];
+            sArr[end] ^= sArr[st];
+            sArr[st] ^= sArr[end];
+            st++;
+            end--;
+        }
+        return new String(sArr);
+    }
+}
+
+public class Solution {
+    public void rotateString(String s) {
+        int len = s.length();  //获取字符串长度
+        char[] sArr = s.toCharArray();
+        reverseString(sArr, 0, len - 1);  
+        reverseString(sArr, 0, n - 1);  
+        reverseString(sArr, n, len - 1);  
+        System.out.println(sArr);
+    }
+    public static void reverseString(char[] sArr, int start, int end) {
+        while (start < end) {
+            sArr[start] ^= sArr[end];
+            sArr[end] ^= sArr[start];
+            sArr[start] ^= sArr[end];
+            start++;
+            end--;
+        }
+    }
+}
