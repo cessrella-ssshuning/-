@@ -1,0 +1,67 @@
+class Solution {
+    /*
+    dq )
+    */
+    public boolean isValid(String s) {
+        Deque<Character> dq = new ArrayDeque<>();
+        for(int i = 0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                dq.push(')');
+            }else if(c=='['){
+                dq.push(']');
+            }else if(c=='{'){
+                dq.push('}');
+                //只有右括号，左括号找不到；左右都有但是不匹配
+            }else if(dq.isEmpty()||dq.peek()!=c){
+                return false;
+            }else {
+                dq.pop();
+            }
+        }
+        //只有左括号
+        return dq.isEmpty();
+    }
+}
+class Solution {
+    public String removeDuplicates(String s) {
+        Deque<Character> dq = new ArrayDeque<>();
+        for(int i = 0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(!dq.isEmpty()&&dq.peek()==c){
+                dq.pop();
+            }else{
+                dq.push(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!dq.isEmpty()){
+            sb.insert(0,dq.pop());
+        }
+        return sb.toString();
+    }
+}
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque<Integer> dq = new ArrayDeque<>();
+        for(int i = 0;i<tokens.length;i++){
+            String s = tokens[i];
+            if(s.equals("+")||s.equals("-")||s.equals("*")||s.equals("/")){
+                int second = dq.pop();
+                int first = dq.pop();
+                if(s.equals("+")){
+                    dq.push(first+second);
+                }else if(s.equals("-")){
+                    dq.push(first-second);
+                }else if(s.equals("*")){
+                    dq.push(first*second);
+                }else{
+                    dq.push(first/second);
+                }
+            }else{
+                dq.push(Integer.parseInt(s));
+            }
+        }
+        return dq.pop();
+    }
+}
