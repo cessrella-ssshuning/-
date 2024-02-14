@@ -1,0 +1,52 @@
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Deque<TreeNode> dq = new ArrayDeque<>();
+        if(root==null) return list;
+        dq.push(root);
+        while(!dq.isEmpty()){
+            TreeNode node = dq.pop();
+            list.add(node.val);
+            if(node.right!=null) dq.push(node.right);
+            if(node.left!=null) dq.push(node.left);
+        }
+        return list;
+    }
+}
+class Solution {
+    //左右中
+    //中右左
+    //
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Deque<TreeNode> dq = new ArrayDeque<>();
+        if(root==null) return list;
+        dq.push(root);
+        while(!dq.isEmpty()){
+            TreeNode node = dq.pop();
+            list.add(node.val);
+            if(node.left!=null) dq.push(node.left);
+            if(node.right!=null) dq.push(node.right); 
+        }
+        Collections.reverse(list);
+        return list;
+    }
+}
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Deque<TreeNode> dq = new ArrayDeque<>();
+        TreeNode cur = root;
+        while(!dq.isEmpty()||cur!=null){
+            if(cur!=null){
+                dq.push(cur);
+                cur = cur.left;
+            }else{
+                cur = dq.pop();
+                list.add(cur.val);
+                cur = cur.right;
+            }   
+        }
+        return list;
+    }
+}
