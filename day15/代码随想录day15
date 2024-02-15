@@ -259,30 +259,6 @@ class Solution {
         return real_root;
     }
 }
-104
-class Solution {
-    public int maxDepth(TreeNode root) {
-        if(root==null) return 0;
-        if(root.left==null&&root.right==null) return 1;
-        return Math.max(maxDepth(root.left),maxDepth(root.right))+1;
-    }
-}
-111
-class Solution {
-    public int minDepth(TreeNode root) {
-        if(root==null) return 0;
-        if(root.left==null&&root.right==null) return 1;
-        int left = minDepth(root.left);
-        int right = minDepth(root.right);
-        if(left==0){
-            left = Integer.MAX_VALUE;
-        }
-        if(right==0){
-            right = Integer.MAX_VALUE;
-        }
-        return Math.min(left,right)+1;
-    }
-}
 226
 class Solution {
     public TreeNode invertTree(TreeNode root) {
