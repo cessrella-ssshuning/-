@@ -22,6 +22,18 @@ class Solution {
         return Math.min(left,right)+1;
     }
 }
+559
+class Solution {
+    public int maxDepth(Node root) {
+        if(root==null) return 0;
+        if(root.children.size()==0) return 1;
+        int res = 0;
+        for(int i = 0;i<root.children.size();i++){
+            res = Math.max(res,maxDepth(root.children.get(i)));
+        }
+        return res+1;
+    }
+}
 222
 class Solution(object):
     def countNodes(self, root):
