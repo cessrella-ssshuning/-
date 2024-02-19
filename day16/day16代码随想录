@@ -1,0 +1,89 @@
+104
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null) return 0;
+        if(root.left==null&&root.right==null) return 1;
+        return Math.max(maxDepth(root.left),maxDepth(root.right))+1;
+    }
+}
+111
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null) return 0;
+        if(root.left==null&&root.right==null) return 1;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        if(left==0){
+            left = Integer.MAX_VALUE;
+        }
+        if(right==0){
+            right = Integer.MAX_VALUE;
+        }
+        return Math.min(left,right)+1;
+    }
+}
+222
+class Solution(object):
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root: return 0
+        left = root.left
+        right = root.right
+        leftDepth = 0
+        rightDepth = 0
+        while left:
+            left = left.left
+            leftDepth+=1
+        while right:
+            right = right.right
+            rightDepth+=1
+        if leftDepth==rightDepth:
+            return (2<<leftDepth)-1
+        return self.countNodes(root.left)+self.countNodes(root.right)+1
+
+
+class Solution {
+    public int countNodes(TreeNode root) {
+        if(root==null) return 0;
+        int height = 0;
+        TreeNode cur = root;
+        while(cur!=null){
+            cur = cur.left;
+            height++;
+        }
+        int lo = 1<<(height-1);
+        int hi = (1<<height)-1;
+             //   System.out.println(height+","+lo+","+hi);
+
+        while(lo+1<hi){
+            int mid = lo+(hi-lo)/2;
+            if(hasK(root,mid)){
+                lo = mid;
+            }else{
+                hi = mid-1;
+            }
+        }
+        if(hasK(root,hi)) return hi;
+        else return lo;
+    }
+    private boolean hasK(TreeNode root,int k){
+        List<Integer> list = new ArrayList<>();
+        while(k>0){
+            list.add(k);
+            k = k/2;
+        }
+        for(int i = list.size()-1;i>=0;i--){
+            if(root==null) return false;
+            if(i==0) return true;
+            if(list.get(i-1)==list.get(i)*2){
+                root = root.left;
+            }else{
+                root = root.right;
+            }
+        }
+        return false;
+    }
+}
