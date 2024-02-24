@@ -1,0 +1,65 @@
+530
+class Solution {
+    int res;
+    TreeNode prev;
+    public int getMinimumDifference(TreeNode root) {
+        res = Integer.MAX_VALUE;
+        helper(root);
+        return res;
+    }
+    private void helper(TreeNode node){
+        if(node==null) return;
+        helper(node.left);
+        if(prev!=null){
+            res = Math.min(res,node.val-prev.val);
+        }
+        prev = node;
+        helper(node.right);
+    }
+}
+501
+class Solution {
+    TreeNode prev;
+    int count;
+    int maxCount;
+    public int[] findMode(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        prev = null;
+        helper(list,root);
+        int[] res = new int[list.size()];
+        int index = 0;
+        for(int i:list){
+            res[index++] = i;
+        }
+        return res;
+    }
+    private void helper(List<Integer> list,TreeNode node){
+        if(node==null) return;
+        helper(list,node.left);
+        if(prev!=null&&prev.val==node.val){
+            count++;
+        }else{
+            count = 1;
+        }
+        if(count>maxCount){
+            list.clear();
+            maxCount = count;
+            list.add(node.val);
+        }else if(count==maxCount){
+            list.add(node.val);
+        }
+        prev = node;
+        helper(list,node.right);
+    }
+}
+236
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root==p||root==q||root==null) return root;
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+        if(left!=null&&right!=null) return root;
+        else if(right!=null&&left==null) return right;
+        else return left;
+    }
+}
